@@ -1,0 +1,1 @@
+const  String endpointUrl = "https://uat-api.vmodel.app";

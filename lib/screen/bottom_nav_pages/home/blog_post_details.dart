@@ -1,7 +1,9 @@
 import 'package:blogapp/shared_services/page_service.dart';
+import 'package:blogapp/utilities/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
+import '../../../features/update_blog/views/update_blog.dart';
 import '../../../utilities/appcolors.dart';
 
 class BlogDetailsPost extends StatefulWidget {
@@ -38,7 +40,9 @@ class _BlogDetailsPostState extends State<BlogDetailsPost> {
               backgroundColor: AppColor.altPrimary,
               label: 'Update',
               labelStyle: const TextStyle(fontSize: 15.0),
-              onTap: () {}
+              onTap: () {
+                nextPage(context, page: const UpdateBlogScreen());
+              }
 
               ),
           SpeedDialChild(

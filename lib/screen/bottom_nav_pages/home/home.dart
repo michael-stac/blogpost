@@ -110,80 +110,78 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       itemCount: 3,
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: AppColor.grayColor,
-                                          blurRadius: 2,
-                                          spreadRadius: 0,
-                                          offset: const Offset(0, 0),
-                                        ),
-                                      ],
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      PageService.textSpace,
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Blog Post",
-                                              style: PageService.headerStyle,
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {
-                                              },
-                                              child:  Icon(Icons.favorite, color: AppColor.grayColor,),
-                                            )
-                                          ],
-                                        ),
+                          onTap: () {
+                            nextPage(context, page: const BlogDetailsPost());
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AppColor.grayColor,
+                                        blurRadius: 2,
+                                        spreadRadius: 0,
+                                        offset: const Offset(0, 0),
                                       ),
-                                      PageService.textSpace,
-                                      const Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10),
-                                        child: Text(
-                                            'oin us for a lively evening of fun, laughter, and good company! Whether reconnecting with old friends or making n'),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                        child: Row(
-                                          children: [
-                                            const Spacer(),
-                                            GestureDetector(
-                                              onTap: () {
-                                                nextPage(context, page: const BlogDetailsPost());
-                                              },
-                                              child: CircleAvatar(
-                                                backgroundColor:
-                                                AppColor.primaryColor,
-                                                child: const Icon(
-                                                    Icons.arrow_forward),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-
                                     ],
-                                  ),
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  children: [
+                                    PageService.textSpace,
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Blog Post",
+                                            style: PageService.headerStyle,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                            },
+                                            child:  Icon(Icons.favorite, color: AppColor.grayColor,),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    PageService.textSpace,
+                                    const Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: Text(
+                                          'oin us for a lively evening of fun, laughter, and good company! Whether reconnecting with old friends or making n'),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                      child: Row(
+                                        children: [
+                                          const Spacer(),
+                                          GestureDetector(
+                                            onTap: () {
+                                              nextPage(context, page: const BlogDetailsPost());
+                                            },
+                                            child: Text("View", style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                color: AppColor.primaryColor, fontFamily: 'SF Pro Display'),),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+
+                                  ],
                                 ),
-                                PageService.textSpacexxL,
-                              ],
-                            ),
+                              ),
+                              PageService.textSpacexxL,
+                            ],
                           ),
                         );
                       },

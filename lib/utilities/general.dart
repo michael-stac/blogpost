@@ -28,7 +28,7 @@ void showCreateNewBlogPostModal(BuildContext context) {
             "Create New Post",
             style: PageService.headerStyle,
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Text(
