@@ -39,6 +39,7 @@ class CreateBlogPostProvider extends ChangeNotifier {
     _status = true;
     _response = "Please wait...";
     notifyListeners();
+    print("started");
 
     ValueNotifier<GraphQLClient> client = _point.getClient("");
 
@@ -50,9 +51,10 @@ class CreateBlogPostProvider extends ChangeNotifier {
           'body': body,
           'dateCreated': dateCreated,
         }));
+    print("creating");
 
     if (result.hasException) {
-      // print(result.exception);
+      print(result.exception);
       _status = false;
       if (result.exception!.graphqlErrors.isEmpty) {
         _response = "Internet is not found";
@@ -63,9 +65,9 @@ class CreateBlogPostProvider extends ChangeNotifier {
       error(context!, message: _response);
     } else {
       // print(result.data);
-      final token = result.data!['createBlog']['token'];
-
-      // print('my token ..... $token');
+      // final token = result.data!['createBlog']['token'];
+      //
+      // // print('my token ..... $token');
 
       ///saving users token
       // DatabaseProvider().saveToken(token: token);

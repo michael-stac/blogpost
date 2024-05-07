@@ -7,7 +7,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 class EndPoint {
   ValueNotifier<GraphQLClient> getClient(String token) {
     ValueNotifier<GraphQLClient> client = ValueNotifier(GraphQLClient(
-      link: HttpLink("$endpointUrl/graphql",
+      link: HttpLink("$endpointUrl/graphql/",
           defaultHeaders: {"Authorization": "Bearer $token"}),
       cache: GraphQLCache(store: HiveStore()),
     ));
