@@ -1,37 +1,31 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 import 'appcolors.dart';
 
 
 
 void success(BuildContext context, {required String message}) {
-  Flushbar(
-    message: message,
-    flushbarPosition: FlushbarPosition.BOTTOM,
-    icon: Icon(
-      Icons.done,
-      size: 28.0,
-      color: AppColor.primaryColor,
-    ),
-    duration: const Duration(seconds: 3),
-    leftBarIndicatorColor: AppColor.primaryColor,
-  ).show(context);
+  QuickAlert.show(
+    backgroundColor: AppColor.primaryColor,
+    context: context,
+    type: QuickAlertType.success,
+    text: message,
+    autoCloseDuration: const Duration(seconds: 2),
+    showConfirmBtn: false,
+  );
 }
 
 
 void error(BuildContext context, {required String message}) {
-  Flushbar(
-    message: message,
-    flushbarPosition: FlushbarPosition.BOTTOM,
-    icon: Icon(
-      Icons.error,
-      size: 28.0,
-      color: AppColor.red,
-    ),
-    duration: const Duration(seconds: 3),
-    leftBarIndicatorColor: AppColor.red,
-    backgroundColor: AppColor.black,
-  ).show(context);
+  QuickAlert.show(
+    backgroundColor: AppColor.red,
+    context: context,
+    type: QuickAlertType.error,
+    text: message,
+    autoCloseDuration: const Duration(seconds: 2),
+    showConfirmBtn: false,
+  );
 
 }

@@ -4,8 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 import '../../../shared_services/page_service.dart';
 import '../../../utilities/appcolors.dart';
+import '../../../utilities/create_error_screen.dart';
+import '../../../utilities/general.dart';
 import '../../../utilities/router.dart';
 import '../providers/providers.dart';
 import 'blog_post_details.dart';
@@ -25,6 +28,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
     super.initState();
     context.read<BlogProvider>().fetchAll();
   }
+  void shareContent(String message) {
+    Share.share(message);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +43,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
         child: blog.state == ViewState.error && blog.blogList.isEmpty
             ? Text(blog.message)
             : blog.state == ViewState.success && blog.blogList.isEmpty
-                ? Container()
+                ? CreateErrorScreen()
                 : Scaffold(
                     floatingActionButton: SpeedDial(
                       onPress: () {
@@ -63,36 +70,17 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Welcome',
+                            '${getGreetingMessage()}!',
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                                color: AppColor.black),
-                          ),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                              color: Colors.black,
+                            ),
+                          )
                         ],
                       ),
-                      leading: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: ClipOval(
-                            child: Image(
-                                image: AssetImage("assets/images/logo.png")),
-                          )),
-                      actions: [
-                        GestureDetector(
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 7),
-                            child: CircleAvatar(
-                              radius: 20,
-                              backgroundColor: const Color(0xffF5F5F5),
-                              child: Icon(
-                                Icons.notifications_rounded,
-                                color: AppColor.primaryColor,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
+                      leading: GreetingIcon(getGreetingMessage()).getIconAsset(),
                     ),
                     body: Container(
                       padding: const EdgeInsets.symmetric(
@@ -105,7 +93,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Explore",
+                                "Explore Blog Post",
                                 style: TextStyle(
                                     color: AppColor.black,
                                     fontSize: 13,
@@ -165,13 +153,14 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                         PageService.headerStyle,
                                                   ),
                                                   GestureDetector(
-                                                    onTap: () {},
+                                                    onTap: () {
+                                                      shareContent('Your sharing message goes here');
+                                                    },
                                                     child: Icon(
                                                       Icons.share,
-                                                      color:
-                                                          AppColor.primaryColor,
+                                                      color: AppColor.primaryColor,
                                                     ),
-                                                  )
+                                                  ),
                                                 ],
                                               ),
                                             ),
