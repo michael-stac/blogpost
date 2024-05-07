@@ -41,6 +41,7 @@ dependencies:
   get_it: ^7.7.0
   flutter_speed_dial: ^7.0.0
   graphql_flutter: ^5.1.2
+  another_flushbar: ^1.12.30
 
 dev_dependencies:
   flutter_test:
