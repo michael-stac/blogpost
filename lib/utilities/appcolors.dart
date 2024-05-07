@@ -36,6 +36,9 @@ class AppColor {
   static Color whiteSmokeColor= const Color.fromRGBO(235,235,235, 1.0);
   static Color whiteSmokeColor2= const Color.fromRGBO(235,235,235, 0.7);
   static Color separatorColor= const Color.fromRGBO(128, 128, 128, 0.3);
+  static Color filledColor = const Color(0xffDDE5E9);
+  static Color romanSilver = const Color(0xff808192);
+
 
   Color primaryRandColour=randColor();
   static Color randColor(){

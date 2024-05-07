@@ -3,7 +3,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import '../../../shared_services/page_service.dart';
 import '../../../utilities/appcolors.dart';
-import '../../../utilities/custom_tab.dart';
+import '../../../utilities/general.dart';
 import '../../../utilities/router.dart';
 import 'blog_post_details.dart';
 class HomePageScreen extends StatefulWidget {
@@ -20,6 +20,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       floatingActionButton: SpeedDial(
+        onPress: (){
+          showCreateNewBlogPostModal(context);
+        },
         icon: Icons.add,
         activeIcon: Icons.close,
         backgroundColor: AppColor.primaryColor,
@@ -109,7 +112,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         return GestureDetector(
                           onTap: () {},
                           child: Container(
-                            margin: const EdgeInsets.only(bottom: 20),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -118,7 +120,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                       color: Colors.white,
                                       boxShadow: [
                                         BoxShadow(
-                                          color: AppColor.whiteSmokeColor2,
+                                          color: AppColor.grayColor,
                                           blurRadius: 2,
                                           spreadRadius: 0,
                                           offset: const Offset(0, 0),
