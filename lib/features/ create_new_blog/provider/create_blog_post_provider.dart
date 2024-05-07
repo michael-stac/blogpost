@@ -11,7 +11,7 @@ import '../../../utilities/router.dart';
 import '../schema/create_blog_post_schema.dart';
 
 
-class CreateAccountProvider extends ChangeNotifier {
+class CreateBlogPostProvider extends ChangeNotifier {
   bool _status = false;
 
   String _response = '';
@@ -30,12 +30,11 @@ class CreateAccountProvider extends ChangeNotifier {
   }
 
   ///Create account method
-  void createAccount(
-      {String? name,
-        String? email,
-        String? phoneNumber,
-        String? password,
-        String? birthDate,
+  void createBlog(
+      {String? title,
+        String? subtitle,
+        String? body,
+        String? dateCreated,
         BuildContext? context}) async {
     _status = true;
     _response = "Please wait...";
@@ -46,11 +45,10 @@ class CreateAccountProvider extends ChangeNotifier {
     QueryResult result = await client.value.mutate(MutationOptions(
         document: gql(CreateBlogPostSchema.creatblogpostJson),
         variables: {
-          'name': name,
-          'email': email,
-          'phoneNumber': phoneNumber,
-          'password': password,
-          'birthDate': birthDate,
+          'title': title,
+          'subtitle': subtitle,
+          'body': body,
+          'dateCreated': dateCreated,
         }));
 
     if (result.hasException) {
