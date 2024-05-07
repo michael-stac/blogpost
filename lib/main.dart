@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
 
+import 'features/ create_new_blog/provider/create_blog_post_provider.dart';
+
 
 
 
@@ -27,6 +29,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ModelProviders()),
+        ChangeNotifierProvider(create: (_) => CreateBlogPostProvider()),
 
       ],
       child: MaterialApp(
