@@ -1,12 +1,13 @@
 import 'package:blogapp/shared_services/bottom_nav_service.dart';
 import 'package:blogapp/splash_screen.dart';
+import 'package:blogapp/src/blog/providers/providers.dart';
 import 'package:blogapp/utilities/appcolors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'package:provider/provider.dart';
 
-import 'features/ create_new_blog/provider/create_blog_post_provider.dart';
 
 
 
@@ -17,6 +18,8 @@ void main() async {
     statusBarColor: primaryColor, // status bar color
     statusBarBrightness: Brightness.dark,
   ));
+  await initHiveForFlutter();
+
   // InternetConnectivity.instance.initialise();
   runApp(const MyApp());
 }
@@ -29,7 +32,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ModelProviders()),
-        ChangeNotifierProvider(create: (_) => CreateBlogPostProvider()),
+        ChangeNotifierProvider(create: (_) => BlogProvider()),
 
       ],
       child: MaterialApp(

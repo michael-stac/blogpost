@@ -1,22 +1,30 @@
-import 'package:blogapp/shared_services/page_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../shared_services/page_service.dart';
 import '../../../utilities/appcolors.dart';
+import '../../../utilities/busy_overlay.dart';
 import '../../../utilities/custom_button.dart';
+import '../../../utilities/message.dart';
 
-class UpdateBlogScreen extends StatefulWidget {
-  const UpdateBlogScreen({super.key});
+class CreateNewBlogPost extends StatefulWidget {
+  const CreateNewBlogPost({super.key});
 
   @override
-  State<UpdateBlogScreen> createState() => _UpdateBlogScreenState();
+  State<CreateNewBlogPost> createState() => _CreateNewBlogPostState();
 }
 
-class _UpdateBlogScreenState extends State<UpdateBlogScreen> {
+class _CreateNewBlogPostState extends State<CreateNewBlogPost> {
+  final TextEditingController _title = TextEditingController();
+  final TextEditingController _subtitle = TextEditingController();
+  final TextEditingController _body = TextEditingController();
+  DateTime currentDate = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: Text("Update Blog",style: PageService.headerStyle,),
+        title: Text("Create Blog",style: PageService.headerStyle,),
       ),
       body: CustomScrollView(
         slivers: [
@@ -40,7 +48,7 @@ class _UpdateBlogScreenState extends State<UpdateBlogScreen> {
                   ),
                   PageService.textSpace,
                   TextFormField(
-
+                    controller: _title,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       filled: true,
@@ -76,6 +84,7 @@ class _UpdateBlogScreenState extends State<UpdateBlogScreen> {
                   ),
                   PageService.textSpace,
                   TextFormField(
+                    controller: _subtitle,
 
                     decoration: InputDecoration(
 
@@ -113,6 +122,7 @@ class _UpdateBlogScreenState extends State<UpdateBlogScreen> {
                   ),
                   PageService.textSpace,
                   TextFormField(
+                    controller: _body,
                     maxLines: 4,
                     decoration: InputDecoration(
                       border: InputBorder.none,
@@ -139,8 +149,8 @@ class _UpdateBlogScreenState extends State<UpdateBlogScreen> {
                     ),
                   ),
                   PageService.textSpaceL,
-                  customButton(context, onTap: (){}, text: 'Update', bgColor: AppColor.primaryColor, textColor: AppColor.white)
-
+                  customButton(context, onTap: (){},
+                      text: 'Create', bgColor: AppColor.primaryColor, textColor: AppColor.white)
                 ],
               ),
             ),

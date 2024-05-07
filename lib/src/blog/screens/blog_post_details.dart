@@ -1,40 +1,68 @@
+import 'package:blogapp/shared_services/page_service.dart';
+import 'package:blogapp/src/blog/screens/update_blog.dart';
+import 'package:blogapp/utilities/busy_overlay.dart';
+import 'package:blogapp/utilities/router.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
 
-import '../../../shared_services/page_service.dart';
+import '../../../constant/enum.dart';
 import '../../../utilities/appcolors.dart';
-import '../../../utilities/busy_overlay.dart';
 import '../../../utilities/custom_button.dart';
-import '../../../utilities/message.dart';
-import '../provider/create_blog_post_provider.dart';
+import '../models/blog_model.dart';
+import '../providers/providers.dart';
 
-class CreateNewBlogPost extends StatefulWidget {
-  const CreateNewBlogPost({super.key});
+class BlogDetailsPost extends StatefulWidget {
+
+  const BlogDetailsPost({super.key, required this.blogId});
+  final String blogId;
 
   @override
-  State<CreateNewBlogPost> createState() => _CreateNewBlogPostState();
+  State<BlogDetailsPost> createState() => _BlogDetailsPostState();
 }
 
-class _CreateNewBlogPostState extends State<CreateNewBlogPost> {
-  final TextEditingController _title = TextEditingController();
-  final TextEditingController _subtitle = TextEditingController();
-  final TextEditingController _body = TextEditingController();
-  DateTime currentDate = DateTime.now();
-
+class _BlogDetailsPostState extends State<BlogDetailsPost> {
+  final TextEditingController _title =TextEditingController();
+  final TextEditingController _subTitle =TextEditingController();
+  final TextEditingController _body =TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<BlogProvider>().fetchById(widget.blogId);
+  }
+  final blogModel = BlogModel;
   @override
   Widget build(BuildContext context) {
-    return Consumer<CreateBlogPostProvider>(builder: (context, model, child) {
+    return Consumer<BlogProvider>(
+      builder: (context, blog,child) {
+
+
         return BusyOverlay(
-          show: model.getStatus == true,
+          show: blog.state == ViewState.busy,
           child: Scaffold(
-            appBar: AppBar(
-              title: Text("Create Blog",style: PageService.headerStyle,),
+          
+            appBar: AppBar(title:  Text("Blog Post Title ${widget.blogId}", style: PageService.headerStyle,),),
+            floatingActionButton: SpeedDial(
+              icon: Icons.delete,
+              onPress: (){},
+              activeIcon: Icons.close,
+              backgroundColor: AppColor.primaryColor,
+              foregroundColor: Colors.white,
+              activeBackgroundColor: AppColor.primaryColor,
+              activeForegroundColor: Colors.white,
+              // buttonSize: size,
+              closeManually: false,
+              curve: Curves.bounceIn,
+              overlayColor: Colors.black,
+              overlayOpacity: 0.5,
+              elevation: 10,
+              shape: const CircleBorder(),
             ),
-            body: CustomScrollView(
+            body: blog.blog == null ? Text("No Blog Details"): CustomScrollView(
               slivers: [
                 SliverToBoxAdapter(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                     child:  Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -58,7 +86,7 @@ class _CreateNewBlogPostState extends State<CreateNewBlogPost> {
                             filled: true,
                             fillColor: AppColor.filledColor,
                             isDense: true,
-                            hintText: 'Enter title',
+                            hintText: _title.text,
                             hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
@@ -88,7 +116,6 @@ class _CreateNewBlogPostState extends State<CreateNewBlogPost> {
                         ),
                         PageService.textSpace,
                         TextFormField(
-                          controller: _subtitle,
 
                           decoration: InputDecoration(
 
@@ -96,7 +123,7 @@ class _CreateNewBlogPostState extends State<CreateNewBlogPost> {
                             filled: true,
                             fillColor: AppColor.filledColor,
                             isDense: true,
-                            hintText: 'Enter subtitle',
+                            hintText: _subTitle.text,
                             hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
@@ -126,14 +153,13 @@ class _CreateNewBlogPostState extends State<CreateNewBlogPost> {
                         ),
                         PageService.textSpace,
                         TextFormField(
-                          controller: _body,
                           maxLines: 4,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             filled: true,
                             fillColor: AppColor.filledColor,
                             isDense: true,
-                            hintText: 'Enter Description',
+                            hintText: _body.text,
                             hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
@@ -153,16 +179,12 @@ class _CreateNewBlogPostState extends State<CreateNewBlogPost> {
                           ),
                         ),
                         PageService.textSpaceL,
-                        customButton(context, onTap: (){
-                          if(
-                          _body.text.isEmpty || _subtitle.text.isEmpty || _title.text.isEmpty
-                          ) {
-                            error(context, message: 'All field are required');
-                            return;
-                          }
-                          model.createBlog(context: context,title: _title.text.trim(),body: _body.text.trim(), subtitle: _subtitle.text.trim(), dateCreated: currentDate.toString());
-                        },
-                            text: 'Create', bgColor: AppColor.primaryColor, textColor: AppColor.white)
+                        customButton(context, onTap: () async{
+
+
+
+                        }, text: 'Update', bgColor: AppColor.primaryColor, textColor: AppColor.white)
+
                       ],
                     ),
                   ),

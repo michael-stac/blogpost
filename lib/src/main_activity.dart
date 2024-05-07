@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 
 import '../shared_services/bottom_nav_service.dart';
 import '../utilities/appcolors.dart';
+import 'blog/screens/blog_page.dart';
 import 'bottom_nav_pages/favourite/favorite.dart';
-import 'bottom_nav_pages/home/home.dart';
 
 
 class MainActivityPage extends StatefulWidget {
