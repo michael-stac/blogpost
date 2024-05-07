@@ -8,9 +8,8 @@ import 'package:provider/provider.dart';
 
 import '../../../constant/enum.dart';
 import '../../../utilities/appcolors.dart';
-import '../../../utilities/custom_button.dart';
-import '../models/blog_model.dart';
 import '../providers/providers.dart';
+import 'blog_page.dart';
 
 class BlogDetailsPost extends StatefulWidget {
 
@@ -30,8 +29,11 @@ class _BlogDetailsPostState extends State<BlogDetailsPost> {
     // TODO: implement initState
     super.initState();
     context.read<BlogProvider>().fetchById(widget.blogId);
+
   }
-  final blogModel = BlogModel;
+
+
+
   @override
   Widget build(BuildContext context) {
     return Consumer<BlogProvider>(
@@ -42,27 +44,53 @@ class _BlogDetailsPostState extends State<BlogDetailsPost> {
           show: blog.state == ViewState.busy,
           child: Scaffold(
           
-            appBar: AppBar(title:  Text("Blog Post Title ${widget.blogId}", style: PageService.headerStyle,),),
-            floatingActionButton: SpeedDial(
-              icon: Icons.delete,
-              onPress: (){},
-              activeIcon: Icons.close,
-              backgroundColor: AppColor.primaryColor,
-              foregroundColor: Colors.white,
-              activeBackgroundColor: AppColor.primaryColor,
-              activeForegroundColor: Colors.white,
-              // buttonSize: size,
-              closeManually: false,
-              curve: Curves.bounceIn,
-              overlayColor: Colors.black,
-              overlayOpacity: 0.5,
-              elevation: 10,
-              shape: const CircleBorder(),
-            ),
-            body: blog.blog == null ? Text("No Blog Details"): CustomScrollView(
+            appBar: AppBar(title:  Text('Blog Details', style: PageService.headerStyle,),),
+              floatingActionButton: SpeedDial(
+                icon: Icons.edit_note_rounded,
+                activeIcon: Icons.close,
+                backgroundColor: AppColor.primaryColor,
+                foregroundColor: Colors.white,
+                activeBackgroundColor: AppColor.primaryColor,
+                activeForegroundColor: Colors.white,
+                // buttonSize: size,
+                closeManually: false,
+                curve: Curves.bounceIn,
+                overlayColor: Colors.black,
+                overlayOpacity: 0.5,
+                elevation: 10,
+                shape: const CircleBorder(),
+                children: [
+                  SpeedDialChild(
+                      child: const Icon(Icons.accessible),
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.orange,
+                      label: 'Update',
+                      labelStyle: const TextStyle(fontSize: 15.0),
+                      onTap: () {
+                        nextPage(context, page: UpdateBlogScreen(details: blog.blog!,));
+                      }
+                      ),
+                  SpeedDialChild(
+                    child: const Icon(Icons.not_accessible),
+                    foregroundColor: Colors.white,
+                    backgroundColor: AppColor.primaryColor,
+                    label: 'Delete',
+                    labelStyle: const TextStyle(fontSize: 15.0),
+                    onTap: () {
+                      // Call the delete function here
+                      final String blogId = widget.blogId; // Assuming widget.details contains the blog ID
+                      context.read<BlogProvider>().delete(blogId);
+                      nextPageAndRemovePrevious(context, page: const HomePageScreen());
+                    },
+                  ),
+
+                ],
+              ),
+            body: blog.blog == null ? Container(): CustomScrollView(
               slivers: [
                 SliverToBoxAdapter(
                   child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child:  Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -86,7 +114,7 @@ class _BlogDetailsPostState extends State<BlogDetailsPost> {
                             filled: true,
                             fillColor: AppColor.filledColor,
                             isDense: true,
-                            hintText: _title.text,
+                            hintText: blog.blog!.title.toString(),
                             hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
@@ -123,7 +151,7 @@ class _BlogDetailsPostState extends State<BlogDetailsPost> {
                             filled: true,
                             fillColor: AppColor.filledColor,
                             isDense: true,
-                            hintText: _subTitle.text,
+                            hintText:blog.blog!.subTitle.toString(),
                             hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
@@ -159,7 +187,7 @@ class _BlogDetailsPostState extends State<BlogDetailsPost> {
                             filled: true,
                             fillColor: AppColor.filledColor,
                             isDense: true,
-                            hintText: _body.text,
+                            hintText: blog.blog!.body.toString(),
                             hintStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
@@ -179,12 +207,6 @@ class _BlogDetailsPostState extends State<BlogDetailsPost> {
                           ),
                         ),
                         PageService.textSpaceL,
-                        customButton(context, onTap: () async{
-
-
-
-                        }, text: 'Update', bgColor: AppColor.primaryColor, textColor: AppColor.white)
-
                       ],
                     ),
                   ),

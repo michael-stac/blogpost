@@ -1,5 +1,5 @@
 
-import 'package:blogapp/src/main_activity.dart';
+import 'package:blogapp/src/blog/screens/blog_page.dart';
 import 'package:blogapp/utilities/appcolors.dart';
 import 'package:blogapp/utilities/router.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +36,7 @@ class _LoadingScreenState extends State<LoadingScreen> with SingleTickerProvider
         isLoading = false;
       });
       Future.delayed(const Duration(seconds: 3), () async {
-        nextPageAndRemovePrevious(context, page: const MainActivityPage());
+        nextPageAndRemovePrevious(context, page: const HomePageScreen());
 
       });
     });

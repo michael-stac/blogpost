@@ -50,6 +50,7 @@ class PageService{
   static TextStyle bigHeaderStyle= TextStyle(fontSize: 22,fontWeight: FontWeight.w700,color: AppColor.primaryColor, fontFamily: 'SF Pro Display');
   static TextStyle extraBigHeaderStyle= TextStyle(fontSize: 25,fontWeight: FontWeight.w700,color: AppColor.primaryColor, fontFamily: 'SF Pro Display');
   static TextStyle headerStyle= TextStyle(fontSize: 17,fontWeight: FontWeight.w700,color: AppColor.primaryColor, fontFamily: 'SF Pro Display');
+  static TextStyle smallHeaderStyle= TextStyle(fontSize: 14,fontWeight: FontWeight.w700,color: AppColor.black, fontFamily: 'SF Pro Display');
 
 
   static TextStyle labelStyle=TextStyle(

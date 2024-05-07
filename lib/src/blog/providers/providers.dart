@@ -10,8 +10,8 @@ import '../models/blog_model.dart';
 import '../repository/schemas.dart';
 
 abstract class _Blog {
-  Future<void> create();
-  Future<void> update(BlogModel details);
+  Future<void> create(String title, String subTitle, String body);
+  Future<void> update(BlogModel details,);
   Future<void> delete(String id);
   Future<void> fetchAll();
   Future<void> fetchById(String id);
@@ -35,15 +35,71 @@ class BlogProvider extends ChangeNotifier implements _Blog {
   String message = '';
 
   @override
-  Future<void> create() {
-    // TODO: implement create
-    throw UnimplementedError();
+  Future<void> create(String title, String subTitle, String body) async {
+    _state = ViewState.busy;
+    _updateState();
+    try {
+      final MutationOptions options = MutationOptions(
+        document: gql(createBlogMutation),
+        variables: {
+          "title": title,
+          "subTitle": subTitle,
+          "body": body,
+        },
+      );
+
+      final QueryResult result = await _endpoint.value.mutate(options);
+      appLog(result.toString());
+
+      if (result.hasException) {
+        final error = result.exception?.graphqlErrors[0].message;
+        message = error ?? 'An error occurred';
+        _state = ViewState.error;
+        _updateState();
+        return;
+      }
+
+      _state = ViewState.success;
+      _updateState();
+    } catch (e) {
+      appLog('Error: ${e.toString()}');
+      message = e.toString();
+      _state = ViewState.error;
+      _updateState();
+    }
   }
 
   @override
-  Future<void> delete(String id) {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future<void> delete(String blogId) async {
+    _state = ViewState.busy;
+    _updateState();
+    try {
+      final MutationOptions options = MutationOptions(
+        document: gql(deleteBlogMutation),
+        variables: {
+          "blogId": blogId,
+        },
+      );
+
+      final QueryResult result = await _endpoint.value.mutate(options);
+      appLog(result.toString());
+
+      if (result.hasException) {
+        final error = result.exception?.graphqlErrors[0].message;
+        message = error ?? 'An error occurred';
+        _state = ViewState.error;
+        _updateState();
+        return;
+      }
+
+      _state = ViewState.success;
+      _updateState();
+    } catch (e) {
+      appLog('Error: ${e.toString()}');
+      message = e.toString();
+      _state = ViewState.error;
+      _updateState();
+    }
   }
 
   _updateState() {
@@ -158,31 +214,28 @@ class BlogProvider extends ChangeNotifier implements _Blog {
   }
 
   @override
-  Future<void> update(BlogModel details)async {
+
+  Future<void> update(BlogModel details) async {
     _state = ViewState.busy;
     _updateState();
-
     try {
       final QueryOptions options = QueryOptions(
-          document: gql(updateblogpostJson),
-          variables:  {
-            "id": details.id,
-            "title": details.title,
-            "subTitle": details.body,
-            "body": 'body',
-            "dateCreated": details.dateCreated,
-          },
-          fetchPolicy: FetchPolicy.networkOnly
+        document: gql(updateBlogMutation),
+        variables: {
+          "blogId": details.id,
+          "title": details.title,
+          "subTitle": details.subTitle,
+          "body": details.body,
+        },
+        fetchPolicy: FetchPolicy.networkOnly,
       );
 
-      final result = await _endpoint.value.query(options);
-
+      final QueryResult result = await _endpoint.value.query(options);
       appLog(result.toString());
 
       if (result.hasException) {
         final error = result.exception?.graphqlErrors[0].message;
-
-        message = error ?? 'error occurred';
+        message = error ?? 'An error occurred';
         _state = ViewState.error;
         _updateState();
         return;
@@ -191,29 +244,27 @@ class BlogProvider extends ChangeNotifier implements _Blog {
       final data = result.data?['updateBlog'];
 
       if (data == null) {
-        message = 'blog details is not available';
+        message = 'Blog details are not available';
         _state = ViewState.error;
         _updateState();
         return;
       }
 
-      final dataModel = BlogModel.fromJson(data);
+      final dataModel = BlogModel.fromJson(data['blogPost']);
       _updateblog = dataModel;
       _state = ViewState.success;
       _updateState();
-
-      fetchById(details.id);
     } on SocketException catch (e) {
-      appLog('Error message dkfkdkfkdfkdkfdf ${e.toString()}');
-      message = 'network failed ${e.message}';
+      appLog('Socket Exception: ${e.toString()}');
+      message = 'Network failed: ${e.message}';
       _state = ViewState.error;
       _updateState();
     } catch (e) {
-      appLog('Error message dkfkdkfkdfkdkfdf ${e.toString()}');
-
+      appLog('Error: ${e.toString()}');
       message = e.toString();
       _state = ViewState.error;
       _updateState();
     }
   }
+
 }

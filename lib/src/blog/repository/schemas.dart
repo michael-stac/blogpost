@@ -14,44 +14,47 @@ const String fetchAllBlogsQuery = """
   """;
 
 /// create blog schema
-const String creatblogpostJson = r"""
-  
-  mutation($title: String!, $subTitle: String!, $body: String!, ) {
-  createBlog(title: $title, subTitle: $subTitle, body: $body) {
-    success
-    
-  }
-}
-
-  """;
-///update blog schema
-const String updateblogpostJson = r"""
-  
-  mutation updateBlogPost($blogId: String!, $title: String!, $subTitle: String!, $body: String!) {
-  updateBlog(blogId: $blogId, title: $title, subTitle: $subTitle, body: $body) {
-    success
-    blogPost {
-      id
-      title
-      subTitle
-      body
-      dateCreated
+const String createBlogMutation = r'''
+  mutation createBlogPost($title: String!, $subTitle: String!, $body: String!) {
+    createBlog(title: $title, subTitle: $subTitle, body: $body) {
+      success
+      blogPost {
+        id
+        title
+        subTitle
+        body
+        dateCreated
+      }
     }
   }
-}
-}
+''';
+
+///update blog schema
+const String updateBlogMutation = r'''
+  mutation updateBlog($blogId: String!, $title: String!, $subTitle: String!, $body: String!) {
+    updateBlog(blogId: $blogId, title: $title, subTitle: $subTitle, body: $body) {
+      success
+      blogPost {
+        id
+        title
+        subTitle
+        body
+        dateCreated
+      }
+    }
+  }
+''';
 
 
-  """;
+
 
 ///deleter blog schema
-const String deleteBlogPostJson = r"""
+const String deleteBlogMutation = r"""
   
   mutation deleteBlogPost($blogId: String!) {
   deleteBlog(blogId: $blogId) {
     success
   }
-}
 }
 
   """;
