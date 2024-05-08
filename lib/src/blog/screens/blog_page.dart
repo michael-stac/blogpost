@@ -154,7 +154,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                   ),
                                                   GestureDetector(
                                                     onTap: () {
-                                                      shareContent('Your sharing message goes here');
+                                                      shareContent('https://example.com/$randomLink');
                                                     },
                                                     child: Icon(
                                                       Icons.share,
