@@ -3,11 +3,13 @@ import 'package:blogapp/utilities/busy_overlay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import '../../../shared_services/page_service.dart';
 import '../../../utilities/appcolors.dart';
 import '../../../utilities/create_error_screen.dart';
+import '../../../utilities/error_screen.dart';
 import '../../../utilities/general.dart';
 import '../../../utilities/router.dart';
 import '../providers/providers.dart';
@@ -41,29 +43,49 @@ class _HomePageScreenState extends State<HomePageScreen> {
       return BusyOverlay(
         show: blog.state == ViewState.busy,
         child: blog.state == ViewState.error && blog.blogList.isEmpty
-            ? Text(blog.message)
+            ? Center(child: Text(blog.message))
             : blog.state == ViewState.success && blog.blogList.isEmpty
-                ? CreateErrorScreen()
+                ? ErrorScreen()
                 : Scaffold(
-                    floatingActionButton: SpeedDial(
-                      onPress: () {
-                        nextPage(context, page: const CreateNewBlogPost());
-                      },
-                      icon: Icons.add,
-                      activeIcon: Icons.close,
-                      backgroundColor: AppColor.primaryColor,
-                      foregroundColor: Colors.white,
-                      activeBackgroundColor: AppColor.primaryColor,
-                      activeForegroundColor: Colors.white,
-                      // buttonSize: size,
-                      closeManually: false,
-                      curve: Curves.bounceIn,
-                      overlayColor: Colors.black,
-                      overlayOpacity: 0.5,
-                      elevation: 10,
-                      shape: const CircleBorder(),
-                    ),
-                    appBar: AppBar(
+          floatingActionButton: SpeedDial(
+            icon: Icons.edit_note_rounded,
+            activeIcon: Icons.close,
+            backgroundColor: AppColor.primaryColor,
+            foregroundColor: Colors.white,
+            activeBackgroundColor: AppColor.primaryColor,
+            activeForegroundColor: Colors.white,
+            // buttonSize: size,
+            closeManually: false,
+            curve: Curves.bounceIn,
+            overlayColor: Colors.black,
+            overlayOpacity: 0.5,
+            elevation: 10,
+            shape: const CircleBorder(),
+            children: [
+              SpeedDialChild(
+                  child: const Icon(Icons.accessible),
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.orange,
+                  label: 'create',
+                  labelStyle: const TextStyle(fontSize: 15.0),
+                  onTap: () {
+                    nextPage(context, page: const CreateNewBlogPost());
+                  }),
+              SpeedDialChild(
+                child:  Icon(MdiIcons.refresh),
+                foregroundColor: Colors.white,
+                backgroundColor: AppColor.primaryColor,
+                label: 'Refresh',
+                labelStyle: const TextStyle(fontSize: 15.0),
+                onTap: () {
+                  nextPageAndRemovePrevious(context,
+                      page: const HomePageScreen());
+                },
+              ),
+            ],
+          ),
+
+           appBar: AppBar(
                       elevation: 0,
                       titleSpacing: 11,
                       title: Column(
@@ -154,7 +176,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                   ),
                                                   GestureDetector(
                                                     onTap: () {
-                                                      shareContent('https://example.com/$randomLink');
+                                                      shareContent('https://example.com');
                                                     },
                                                     child: Icon(
                                                       Icons.share,
