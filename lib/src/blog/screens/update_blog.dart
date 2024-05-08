@@ -177,7 +177,7 @@ class _UpdateBlogScreenState extends State<UpdateBlogScreen> {
                       final result = context.read<BlogProvider>();
                       await result.update(data);
                       if (result.state == ViewState.success) {
-                        nextPageAndRemovePrevious(context,page:  const HomePageScreen());
+                        nextPageAndRemovePrevious(context,page:   HomePageScreen());
                       }
                     },
                         text: 'Update',

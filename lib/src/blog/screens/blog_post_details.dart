@@ -81,7 +81,7 @@ class _BlogDetailsPostState extends State<BlogDetailsPost> {
                       .blogId; // Assuming widget.details contains the blog ID
                   context.read<BlogProvider>().delete(blogId);
                   nextPageAndRemovePrevious(context,
-                      page: const HomePageScreen());
+                      page:  HomePageScreen());
                 },
               ),
             ],

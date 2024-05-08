@@ -36,7 +36,7 @@ class _LoadingScreenState extends State<LoadingScreen> with SingleTickerProvider
         isLoading = false;
       });
       Future.delayed(const Duration(seconds: 3), () async {
-        nextPageAndRemovePrevious(context, page: const HomePageScreen());
+        nextPageAndRemovePrevious(context, page:  HomePageScreen());
 
       });
     });

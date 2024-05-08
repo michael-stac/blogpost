@@ -43,9 +43,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
       return BusyOverlay(
         show: blog.state == ViewState.busy,
         child: blog.state == ViewState.error && blog.blogList.isEmpty
-            ? ErrorScreen()
+            ? Center(child: Text(blog.message))
             : blog.state == ViewState.success && blog.blogList.isEmpty
-            ? ErrorScreen()
+            ? Center(child: Text(blog.message))
             : Scaffold(
           floatingActionButton: SpeedDial(
             icon: Icons.edit_note_rounded,

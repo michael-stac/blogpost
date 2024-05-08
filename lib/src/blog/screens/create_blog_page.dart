@@ -160,7 +160,7 @@ class _CreateNewBlogPostState extends State<CreateNewBlogPost> {
                         context
                             .read<BlogProvider>()
                             .create(title, subTitle, body);
-                        nextPageAndRemovePrevious(context, page: const HomePageScreen());
+                        nextPageAndRemovePrevious(context, page:  HomePageScreen());
 
                       }
                       // Form is valid, proceed with creating the blog post

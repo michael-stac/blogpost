@@ -24,7 +24,7 @@ class _ErrorScreenState extends State<ErrorScreen> {
             GestureDetector(
               onTap: () {
                 nextPageAndRemovePrevious(context,
-                    page: const HomePageScreen());
+                    page:  HomePageScreen());
               },
               child: Text(
                 'Refers',

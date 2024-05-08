@@ -125,8 +125,8 @@ class BlogProvider extends ChangeNotifier implements _Blog {
       appLog(result.toString());
 
       if (result.hasException) {
-        final error = result.exception?.graphqlErrors[0].message;
-
+        final List<GraphQLError> errors = result.exception?.graphqlErrors ?? [];
+        final error = errors.isNotEmpty ? errors[0].message : 'Unknown error';
         message = error ?? 'error occurred';
         _state = ViewState.error;
         _updateState();
@@ -178,8 +178,9 @@ class BlogProvider extends ChangeNotifier implements _Blog {
       appLog(result.toString());
 
       if (result.hasException) {
-        final error = result.exception?.graphqlErrors[0].message;
+        final List<GraphQLError> errors = result.exception?.graphqlErrors ?? [];
 
+        final error = errors.isNotEmpty ? errors[0].message : 'Unknown error';
         message = error ?? 'error occurred';
         _state = ViewState.error;
         _updateState();
